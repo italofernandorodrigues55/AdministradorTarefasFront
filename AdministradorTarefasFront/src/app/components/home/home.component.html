@@ -1,0 +1,150 @@
+<div class="tela-container">
+    <header class="cabecalho">
+        <img src="/keevo.png" alt="Logo Keevo" class="logo-keevo">
+    </header>
+
+    <section class="tabela-wrapper">
+
+        <div class="col-md-12 col-12 tabela-header d-flex justify-content-between align-items-center flex-wrap">
+            <h2 class="titulo-tabela">Lista de Tarefas</h2>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3 col-sm-6 col-12">
+                <label for="statusFiltro" class="form-label text-white">Filtrar por Status</label>
+                <select id="statusFiltro" class="form-select" [(ngModel)]="statusSelecionado"
+                    (change)="filtrarPorStatus()">
+                    <option value="Todos">Todos</option>
+                    <option value="Novo">Novo</option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Pendente">Pendente</option>
+                    <option value="Concluido">Concluído</option>
+                </select>
+            </div>
+            <div class="col-md-9 col-sm-6 col-12 div-btb-criar-tarefa">
+                <button class="btn-adicionar-tarefa" (click)="abrirCriacaoTarefa()">
+                    <i class="bi bi-plus"></i> Criar Nova Tarefa
+                </button>
+            </div>
+        </div>
+
+        <table class="tabela-tarefas">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                    <th>Data</th>
+                    <th>Responsável</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tarefa of tarefas" [attr.id]="'tarefa-' + tarefa.id" (click)="editarTarefa(tarefa.id)">
+                    <td data-label="Nome">{{ formatTextMaxLength(tarefa.nome, 30) }}</td>
+                    <td data-label="Descrição">{{ formatTextMaxLength(tarefa.descricao, 50) }}</td>
+                    <td data-label="Status">{{ getStatusLabel(tarefa.status) }}</td>
+                    <td data-label="Data">{{ tarefa.dataAbertura }}</td>
+                    <td data-label="Responsável">{{ tarefa.responsavel }}</td>
+                </tr>
+
+                <tr *ngIf="!tarefas.length && !loading">
+                    <td colspan="5" class="text-center text-white py-3">
+                        Nenhum resultado encontrado.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="modalCriarTarefa" tabindex="-1" aria-labelledby="modalCriarTarefaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCriarTarefaLabel">
+                    {{ modoEdicao ? 'Editar Tarefa' : 'Nova Tarefa' }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+
+            <div class="modal-body">
+                <form #formTarefa="ngForm" (ngSubmit)="salvarTarefa(formTarefa)">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" [(ngModel)]="tarefaModel.nome" required
+                            [class.is-invalid]="nomeInput.invalid && nomeInput.touched" #nomeInput="ngModel"
+                            name="nome">
+                        <div class="invalid-feedback" *ngIf="nomeInput.invalid && nomeInput.touched">
+                            Campo obrigatório
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" [(ngModel)]="tarefaModel.descricao"
+                            name="descricao">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="responsavel" class="form-label">Responsável</label>
+                        <input type="text" class="form-control" id="responsavel" [(ngModel)]="tarefaModel.responsavel"
+                            name="responsavel">
+                    </div>
+
+                    <div class="mb-3" *ngIf="modoEdicao">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status" [(ngModel)]="tarefaModel.status">
+                            <option [value]="1">Novo</option>
+                            <option [value]="2">Ativo</option>
+                            <option [value]="3">Pendente</option>
+                            <option [value]="4">Concluído</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button *ngIf="modoEdicao" type="button" class="btn btn-danger me-auto"
+                            (click)="confirmarExclusao()">
+                            Excluir
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            {{ modoEdicao ? 'Salvar Alterações' : 'Salvar Tarefa' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal fade" id="modalConfirmarExclusao" tabindex="-1"
+                aria-labelledby="modalConfirmarExclusaoLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-body text-center">
+                            <p class="mb-3">Excluir esta tarefa?</p>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary btn-sm w-45"
+                                    data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-sm w-45"
+                                    (click)="excluirConfirmado()">
+                                    Excluir
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading" id="loading-overlay"
+    class="d-flex justify-content-center align-items-center position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75"
+    style="z-index: 1050;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+    </div>
+</div>

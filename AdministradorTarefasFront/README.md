@@ -1,59 +1,105 @@
-# AdministradosTarefasFront
+# 🗕️ Administrador de Tarefas FrontEnd
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+Interface web para gerenciamento de tarefas, desenvolvida em **Angular**. Este projeto consome uma API .NET Core e permite criar, editar, excluir e listar tarefas.
 
-## Development server
+---
 
-To start a local development server, run:
+## 💪 Como executar o projeto localmente
+
+### ✅ Requisitos
+
+Antes de começar, certifique-se de ter instalado:
+
+- [Node.js](https://nodejs.org/pt)
+- [Angular CLI](https://angular.io/cli) (`npm install -g @angular/cli`)
+- [Git](https://git-scm.com/)
+
+---
+
+### 📆 Clonando o projeto
+
+```bash
+git clone https://github.com/italofernandorodrigues55/AdministradorTarefasFront.git
+cd AdministradorTarefasFront
+```
+
+---
+
+### 🔧 Configurando a API
+
+Edite o arquivo `src/app/environments/environment.ts` com a URL da sua API:
+
+```ts
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:7053/api'
+};
+```
+
+---
+
+### 🚀 Executando o projeto
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Execute o servidor de desenvolvimento:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abra o navegador e acesse:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+> ⚠️ A porta pode variar dependendo do ambiente. Verifique o terminal após o `ng serve`.
 
-```bash
-ng generate --help
+---
+
+## 🩹 Estrutura do Projeto
+
+```
+src/
+├── app/
+│   ├── components/          # Componentes de interface (Home, Modais, etc)
+│   ├── services/            # Serviços de integração com a API
+│   ├── environments/        # Configurações de ambiente
+│   ├── app.component.*      # Componente principal
+│   ├── app.routes.ts        # Rotas da aplicação
+│   └── app.config.ts        # Configuração da aplicação
+├── assets/                  # Imagens e arquivos estáticos
+├── styles.css               # Estilo global
+├── index.html               # HTML principal
+└── main.ts                  # Bootstrap da aplicação
 ```
 
-## Building
+---
 
-To build the project run:
+## 🌐 Endpoints Consumidos
 
-```bash
-ng build
-```
+| Método | Rota                          | Descrição                 |
+|--------|-------------------------------|---------------------------|
+| POST   | `/api/Tarefa`                 | Criar uma nova tarefa     |
+| GET    | `/api/Tarefa/status/{status}` | Listar tarefas por status |
+| GET    | `/api/Tarefa/{id}`            | Buscar tarefa por ID      |
+| PUT    | `/api/Tarefa`                 | Atualizar tarefa          |
+| DELETE | `/api/Tarefa/{id}`            | Excluir tarefa            |
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+> Todos os endpoints estão disponíveis via Swagger na API:
+> [AdministradorTarefas.Api](https://github.com/italofernandorodrigues55/AdministradorTarefas.Api)
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## 💡 Funcionalidades
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- ✅ CRUD completo de tarefas
+- ✅ Filtros por status
+- ✅ Design responsivo com visualização em cards no mobile
+- ✅ Validação de formulário
+- ✅ Tela de carregamento global

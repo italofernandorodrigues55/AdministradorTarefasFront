@@ -38,6 +38,14 @@
     border-spacing: 0 10px;
 }
 
+.tabela-tarefas td:nth-child(1),
+.tabela-tarefas td:nth-child(2),
+.tabela-tarefas td:nth-child(5) {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
 .tabela-tarefas {
     width: 100%;
     border-collapse: collapse;
@@ -45,12 +53,12 @@
 }
 
 .tabela-tarefas th {
-    background-color: #ffffff;
-    color: #495057;
+    background-color: #5412a8;
+    color: #fff;
     font-weight: 600;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #7817ee;
+    padding: 0.4rem;
+    border: none;
+    border-right: 1px solid #7d19f2;
 }
 
 .tabela-tarefas tr:hover {
@@ -129,6 +137,7 @@
         border: none;
         text-align: left;
         position: relative;
+        font-size: 16px;
     }
 
     .tabela-tarefas td::before {
@@ -136,7 +145,7 @@
         font-weight: bold;
         display: block;
         margin-bottom: 0.25rem;
-        color: #ccc;
+        color: #aaa9a9;
         font-size: 0.85rem;
     }
 

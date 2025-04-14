@@ -17,6 +17,7 @@ export class HomeComponent {
   tarefaSelecionada: any = null;
   statusSelecionado: string = 'Todos';
   loading: boolean = false;
+  isMobile: boolean = false;
 
   novaTarefa = {
     nome: '',
@@ -27,7 +28,13 @@ export class HomeComponent {
   constructor(private tarefaService: TarefaService) { }
 
   ngOnInit(): void {
+    this.checkIfMobile();
+    window.addEventListener('resize', this.checkIfMobile.bind(this));
     this.getTarefasPorStatus(this.statusSelecionado);
+  }
+
+  checkIfMobile(): void {
+    this.isMobile = window.innerWidth <= 768;
   }
 
   getTarefasPorStatus(status: string): void {

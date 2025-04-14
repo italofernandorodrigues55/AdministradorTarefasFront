@@ -40,11 +40,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let tarefa of tarefas" [attr.id]="'tarefa-' + tarefa.id" (click)="editarTarefa(tarefa.id)">
-                    <td data-label="Nome">{{ formatTextMaxLength(tarefa.nome, 30) }}</td>
-                    <td data-label="Descrição">{{ formatTextMaxLength(tarefa.descricao, 50) }}</td>
+                    <td data-label="Nome">{{ isMobile ? tarefa.nome : formatTextMaxLength(tarefa.nome, 30) }}</td>
+                    <td data-label="Descrição">{{ isMobile ? tarefa.descricao : formatTextMaxLength(tarefa.descricao,
+                        50) }}</td>
                     <td data-label="Status">{{ getStatusLabel(tarefa.status) }}</td>
                     <td data-label="Data">{{ tarefa.dataAbertura }}</td>
-                    <td data-label="Responsável">{{ tarefa.responsavel }}</td>
+                    <td data-label="Responsável">{{ isMobile ? tarefa.responsavel :
+                        formatTextMaxLength(tarefa.responsavel, 30) }}</td>
                 </tr>
 
                 <tr *ngIf="!tarefas.length && !loading">
@@ -75,7 +77,7 @@
                         <label for="nome" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="nome" [(ngModel)]="tarefaModel.nome" required
                             [class.is-invalid]="nomeInput.invalid && nomeInput.touched" #nomeInput="ngModel"
-                            name="nome">
+                            maxlength="100" name="nome">
                         <div class="invalid-feedback" *ngIf="nomeInput.invalid && nomeInput.touched">
                             Campo obrigatório
                         </div>
@@ -84,13 +86,13 @@
                     <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição</label>
                         <input type="text" class="form-control" id="descricao" [(ngModel)]="tarefaModel.descricao"
-                            name="descricao">
+                            maxlength="200" name="descricao">
                     </div>
 
                     <div class="mb-3">
                         <label for="responsavel" class="form-label">Responsável</label>
                         <input type="text" class="form-control" id="responsavel" [(ngModel)]="tarefaModel.responsavel"
-                            name="responsavel">
+                            maxlength="100" name="responsavel">
                     </div>
 
                     <div class="mb-3" *ngIf="modoEdicao">

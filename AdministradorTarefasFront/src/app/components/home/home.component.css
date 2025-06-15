@@ -13,7 +13,7 @@
 }
 
 .tabela-wrapper {
-    background: linear-gradient(135deg, #5b0ed4 0%, #8c1eff 50%, #b22fef 100%);
+    background: linear-gradient(131deg, #3b0353 0%, #380072 50%, #620a8c 100%);
     padding: 4rem 4rem 4rem 4rem;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -53,12 +53,13 @@
 }
 
 .tabela-tarefas th {
-    background-color: #5412a8;
+    background-color: #502785;
     color: #fff;
     font-weight: 600;
     padding: 0.4rem;
     border: none;
-    border-right: 1px solid #7d19f2;
+    border-right: 1px solid #0000003b;
+    border-radius: 7px;
 }
 
 .tabela-tarefas tr:hover {
@@ -103,7 +104,7 @@
 }
 
 .logo-keevo {
-    width: 13rem;
+    width: 21rem;
     float: left;
 }
 
@@ -155,6 +156,6 @@
     }
 
     .tabela-wrapper {
-        background: #5b0ed4;
+        background: linear-gradient(131deg, #3b0353 0%, #380072 50%, #620a8c 100%);
     }
 }
